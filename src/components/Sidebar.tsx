@@ -120,11 +120,10 @@ const Sidebar = ({ isOpen, toggleSidebar, selectedGroupIndex = 0, onSelectGroup 
           </div>
           
           {/* 广告位 */}
-          <AdSection isOpen={isOpen} />
+          {/* <AdSection isOpen={isOpen} /> */}
 
           {/* GitHub Star Button - 只在侧边栏打开时显示，放在底部 */}
-          <div className="px-3 py-2 mt-auto">
-            {/* 标题移至底部 */}
+          {/* <div className="px-3 py-2 mt-auto">
             <div className="flex items-center justify-left mb-3">
               <a href="/" className="flex items-center">
                 <span 
@@ -152,7 +151,7 @@ const Sidebar = ({ isOpen, toggleSidebar, selectedGroupIndex = 0, onSelectGroup 
                 </GitHubButton>
               </div>
             )}
-          </div>
+          </div> */}
         </div>
       </div>
       

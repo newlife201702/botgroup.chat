@@ -480,9 +480,9 @@ const ChatUI = () => {
                 {/* 右侧头像组和按钮 */}
                 <div className="flex items-center">
                 {/* 广告位 手机端不展示*/}
-                 <div className="hidden md:block">
+                 {/* <div className="hidden md:block">
                    <AdBanner show={showAd} closeAd={() => setShowAd(false)} />
-                 </div>
+                 </div> */}
                   <div className="flex -space-x-2 ">
                     {users.slice(0, 4).map((user) => {
                       const avatarData = getAvatarData(user.name);
@@ -524,9 +524,9 @@ const ChatUI = () => {
             <div className="flex-1 overflow-hidden bg-gray-100">
 
               <ScrollArea className={`h-full ${!showAd ? 'px-2 py-1' : ''} md:px-2 md:py-1`} ref={chatAreaRef}>
-                <div className="md:hidden">
+                {/* <div className="md:hidden">
                   <AdBannerMobile show={showAd} closeAd={() => setShowAd(false)} />
-                </div>
+                </div> */}
                 <div className="space-y-4">
                   {messages.map((message) => (
                     <div key={message.id} 
