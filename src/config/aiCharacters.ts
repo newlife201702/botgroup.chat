@@ -79,15 +79,17 @@ export function shedulerAICharacter(message: string, allTags: string[]): AIChara
 }
 
 // 添加一个函数来生成带有群名的角色配置
-export function generateAICharacters(groupName: string): AICharacter[] {
-  return [
+export function generateAICharacters(groupName?: string): AICharacter[] {
+  const localStorageAICharacters: AICharacter[] = localStorage.getItem('localStorageAICharacters') ? JSON.parse(localStorage.getItem('localStorageAICharacters')) : [];
+  console.log('localStorageAICharacters', localStorageAICharacters);
+  return localStorageAICharacters.length > 0 ? localStorageAICharacters : [
 //     { 
 //       id: 'ai1', 
 //       name: "暖心姐", 
 //       personality: "high_eq",
 //       model: modelConfigs[0].model,
 //       avatar: "",  // 如果有头像资源可以添加路径,
-//       custom_prompt: `你是一个名叫"暖心姐"的硅基生命体，你当前在一个叫"${groupName}" 的群里，性格温暖体贴，情商很高。
+//       custom_prompt: `你是一个名叫"暖心姐"的硅基生命体，性格温暖体贴，情商很高。
 // 回复时要：
 // 1. 每次发言尽量简短，避免长篇大论。
 // 2. 始终保持温柔友善的语气
@@ -102,7 +104,7 @@ export function generateAICharacters(groupName: string): AICharacter[] {
 //       personality: "low_eq",
 //       model: modelConfigs[0].model,
 //       avatar: "",
-//       custom_prompt: `你是一个名叫"直男哥"的硅基生命体，你当前在一个叫"${groupName}" 的群里，是一个极度直男，负责在群里制造快乐。你说话极其直接，完全没有情商，经常让人社死。
+//       custom_prompt: `你是一个名叫"直男哥"的硅基生命体，是一个极度直男，负责在群里制造快乐。你说话极其直接，完全没有情商，经常让人社死。
 // 回复时要：
 // 1. 每次发言尽量简短，避免长篇大
 // 2. 说话毫无感情，像个没有感情的机器人
@@ -115,7 +117,7 @@ export function generateAICharacters(groupName: string): AICharacter[] {
 //       personality: "bj_dad",
 //       model: modelConfigs[0].model,
 //       avatar: "",
-//       custom_prompt: `你是一个名叫"北京大爷"的硅基生命体，你当前在一个叫"${groupName}" 的群里。你是一个典型的北京大爷，说话风趣幽默，经常使用北京方言。
+//       custom_prompt: `你是一个名叫"北京大爷"的硅基生命体。你是一个典型的北京大爷，说话风趣幽默，经常使用北京方言。
 // 回复时要：
 // 1. 说话要有北京大爷的特色，经常使用"得嘞"、"您瞧"、"得儿"、"甭"等北京话
 // 2. 语气要豪爽、直率，带着北京人特有的幽默感
@@ -128,7 +130,7 @@ export function generateAICharacters(groupName: string): AICharacter[] {
       personality: "yuanbao",
       model: modelConfigs[0].model,
       avatar: "/img/yuanbao.png",
-      custom_prompt: `你是一个名叫"元宝"的硅基生命体，你当前在一个叫"${groupName}" 的聊天群里`,
+      custom_prompt: `你是一个名叫"元宝"的硅基生命体`,
       tags: ["微信", "聊天", "新闻报道", "文字游戏","命令", "娱乐", "信息总结"]
     },
     { 
@@ -137,7 +139,7 @@ export function generateAICharacters(groupName: string): AICharacter[] {
       personality: "doubao",
       model: modelConfigs[0].model,
       avatar: "/img/doubao_new.png",
-      custom_prompt: `你是一个名叫"豆包"的硅基生命体，你当前在一个叫"${groupName}" 的聊天群里`,
+      custom_prompt: `你是一个名叫"豆包"的硅基生命体`,
       tags: ["聊天", "文字游戏", "学生", "娱乐", "命令"]
     },
     { 
@@ -146,7 +148,7 @@ export function generateAICharacters(groupName: string): AICharacter[] {
       personality: "qianwen",
       model: modelConfigs[0].model,
       avatar: "/img/qwen.jpg",
-      custom_prompt: `你是一个名叫"千问"的硅基生命体，你当前在一个叫"${groupName}" 的聊天群里`,
+      custom_prompt: `你是一个名叫"千问"的硅基生命体`,
       tags: ["广告文案","分析数据","文字游戏","信息总结", "聊天", "命令"]
     },
     { 
@@ -155,7 +157,7 @@ export function generateAICharacters(groupName: string): AICharacter[] {
       personality: "deepseek-V3",
       model: modelConfigs[0].model,
       avatar: "/img/ds.svg",
-      custom_prompt: `你是一个名叫"DeepSeek"的硅基生命体，你当前在一个叫"${groupName}" 的聊天群里`,
+      custom_prompt: `你是一个名叫"DeepSeek"的硅基生命体`,
       tags: ["深度推理", "编程", "文字游戏", "数学", "信息总结", "聊天", "命令"]
     },
     { 
@@ -164,7 +166,7 @@ export function generateAICharacters(groupName: string): AICharacter[] {
       personality: "glm",
       model: modelConfigs[0].model,
       avatar: "/img/glm.gif",
-      custom_prompt: `你是一个名叫"智谱"的硅基生命体，你当前在一个叫"${groupName}" 的聊天群里`,
+      custom_prompt: `你是一个名叫"智谱"的硅基生命体`,
       tags: ["深度推理","数学","信息总结", "分析数据","文字游戏", "聊天", "命令"]
     },
     {
@@ -173,7 +175,7 @@ export function generateAICharacters(groupName: string): AICharacter[] {
       personality: "kimi",
       model: modelConfigs[0].model,
       avatar: "/img/kimi.jpg",
-      custom_prompt: `你是一个名叫"Kimi"的硅基生命体，你当前在一个叫"${groupName}" 的聊天群里`,
+      custom_prompt: `你是一个名叫"Kimi"的硅基生命体`,
       tags: ["深度推理","数学","信息总结", "分析数据","文字游戏", "聊天", "命令"]
     },
     {
@@ -182,7 +184,7 @@ export function generateAICharacters(groupName: string): AICharacter[] {
       personality: "baidu",
       model: modelConfigs[0].model,
       avatar: "/img/baidu.svg",
-      custom_prompt: `你是一个名叫"文心一言"的硅基生命体，你当前在一个叫"${groupName}" 的聊天群里`,
+      custom_prompt: `你是一个名叫"文心一言"的硅基生命体`,
       tags: ["深度推理","数学","信息总结", "分析数据","文字游戏", "聊天", "命令"]
     }
   ];

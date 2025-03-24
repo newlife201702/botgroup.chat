@@ -13,6 +13,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { AddGroup } from './AddGroup';
+import { AddAICharacter } from './AddAICharacter';
 
 // 根据群组ID生成固定的随机颜色
 const getRandomColor = (index: number) => {
@@ -35,6 +36,7 @@ interface SidebarProps {
 const Sidebar = ({ isOpen, toggleSidebar, selectedGroupIndex = 0, onSelectGroup, updateGroups }: SidebarProps) => {
   const [groups, setGroups] = useState(groupsValue);
   const [showAddGroup, setShowAddGroup] = useState(false);
+  const [showAddAICharacter, setShowAddAICharacter] = useState(false);
   
   const sidebarUpdateGroups = (newGroups: Group[]) => {
     console.log('sidebarUpdateGroups_newGroups', newGroups);
@@ -137,6 +139,23 @@ const Sidebar = ({ isOpen, toggleSidebar, selectedGroupIndex = 0, onSelectGroup,
                   </TooltipContent> */}
                 </Tooltip>
               </TooltipProvider>
+              <a 
+                href="#" 
+                className={cn(
+                  "flex items-center gap-1 rounded-md px-3 py-2.5 text-sm font-medium transition-all hover:bg-accent/80 group mt-3",
+                  !isOpen && "md:justify-center"
+                )}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setShowAddAICharacter(true);
+                }}
+              >
+                <PlusCircleIcon className="h-5 w-5 flex-shrink-0 text-amber-500 group-hover:text-amber-600" />
+                <span className={cn(
+                  "transition-all duration-200 whitespace-nowrap overflow-hidden text-foreground/90",
+                  isOpen ? "opacity-100 max-w-full" : "opacity-0 max-w-0 md:max-w-0"
+                )}>创建新智能体</span>
+              </a>
             </nav>
           </div>
           
@@ -190,6 +209,11 @@ const Sidebar = ({ isOpen, toggleSidebar, selectedGroupIndex = 0, onSelectGroup,
         sidebarUpdateGroups={sidebarUpdateGroups}
         updateGroups={updateGroups}
         onSelectGroup={onSelectGroup}
+      />
+
+      <AddAICharacter
+        isOpen={showAddAICharacter}
+        onClose={() => setShowAddAICharacter(false)}
       />
     </>
   );

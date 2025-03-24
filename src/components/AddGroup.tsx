@@ -15,7 +15,9 @@ interface AddGroupProps {
 export function AddGroup({ isOpen, onClose, sidebarUpdateGroups, updateGroups, onSelectGroup }: AddGroupProps) {
   const [groupName, setGroupName] = useState<string>('');
   const [groupDescription, setGroupDescription] = useState<string>('');
-  const [groupMembers, setGroupMembers] = useState<AICharacter[]>([]);
+  // const [groupMembers, setGroupMembers] = useState<AICharacter[]>(generateAICharacters());
+  const groupMembers = generateAICharacters();
+  console.log('groupMembers', groupMembers);
   const [selectedMembers, setSelectedMembers] = useState<string[]>([]);
 
   const handleMemberSelectionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,15 +48,15 @@ export function AddGroup({ isOpen, onClose, sidebarUpdateGroups, updateGroups, o
     onSelectGroup?.(newGroups.length - 1, newGroups);
   };
 
-  useEffect(() => {
-    console.log('groupName', groupName);
-    if (groupName) {
-      setGroupMembers(generateAICharacters(groupName));
-      console.log('generateAICharacters(groupName)', generateAICharacters(groupName));
-    } else {
-      setGroupMembers([]);
-    }
-  }, [groupName]);
+  // useEffect(() => {
+  //   console.log('groupName', groupName);
+  //   if (groupName) {
+  //     setGroupMembers(generateAICharacters(groupName));
+  //     console.log('generateAICharacters(groupName)', generateAICharacters(groupName));
+  //   } else {
+  //     setGroupMembers([]);
+  //   }
+  // }, [groupName]);
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => {
