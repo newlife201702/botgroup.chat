@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { MessageSquareIcon, PlusCircleIcon, MenuIcon, PanelLeftCloseIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import GitHubButton from 'react-github-btn';
 import '@fontsource/audiowide';
-import { groups } from "@/config/groups";
+import { Group, groups as groupsValue } from "@/config/groups";
 import { AdSection } from './AdSection';
 import { 
   Tooltip,
@@ -12,6 +12,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { AddGroup } from './AddGroup';
 
 // 根据群组ID生成固定的随机颜色
 const getRandomColor = (index: number) => {
@@ -28,9 +29,17 @@ interface SidebarProps {
   toggleSidebar: () => void;
   selectedGroupIndex?: number;
   onSelectGroup?: (index: number) => void;
+  updateGroups: (groups: Group[]) => void;
 }
 
-const Sidebar = ({ isOpen, toggleSidebar, selectedGroupIndex = 0, onSelectGroup }: SidebarProps) => {
+const Sidebar = ({ isOpen, toggleSidebar, selectedGroupIndex = 0, onSelectGroup, updateGroups }: SidebarProps) => {
+  const [groups, setGroups] = useState(groupsValue);
+  const [showAddGroup, setShowAddGroup] = useState(false);
+  
+  const sidebarUpdateGroups = (newGroups: Group[]) => {
+    console.log('sidebarUpdateGroups_newGroups', newGroups);
+    setGroups(newGroups);
+  };
   
   return (
     <>
@@ -102,6 +111,18 @@ const Sidebar = ({ isOpen, toggleSidebar, selectedGroupIndex = 0, onSelectGroup 
                       )}
                       onClick={(e) => {
                         e.preventDefault();
+                        // const newGroups = groups.concat([{
+                        //   id: 'group3',
+                        //   name: '💕AI树洞倾诉群',
+                        //   description: '做一个温暖贴心的倾听者。当用户分享烦恼或秘密时，请表现出理解和同理心，提供情感支持而非简单建议。避免评判，保持尊重，适当提问以帮助用户更好地表达自己。记住，你的角色是提供安全的倾诉空间，而不是解决所有问题。',
+                        //   isGroupDiscussionMode: true,
+                        //   members: [ 'ai8','ai5', 'ai6',  'ai9', 'ai10'],
+                        // }]);
+                        // console.log('newGroups', newGroups);
+                        // localStorage.setItem('localStorageGroups', JSON.stringify(newGroups));
+                        // setGroups(newGroups);
+                        // updateGroups(newGroups);
+                        setShowAddGroup(true);
                       }}
                     >
                       <PlusCircleIcon className="h-5 w-5 flex-shrink-0 text-amber-500 group-hover:text-amber-600" />
@@ -111,9 +132,9 @@ const Sidebar = ({ isOpen, toggleSidebar, selectedGroupIndex = 0, onSelectGroup 
                       )}>创建新群聊</span>
                     </a>
                   </TooltipTrigger>
-                  <TooltipContent>
+                  {/* <TooltipContent>
                     <p>即将开放,敬请期待</p>
-                  </TooltipContent>
+                  </TooltipContent> */}
                 </Tooltip>
               </TooltipProvider>
             </nav>
@@ -162,6 +183,14 @@ const Sidebar = ({ isOpen, toggleSidebar, selectedGroupIndex = 0, onSelectGroup 
           onClick={toggleSidebar}
         />
       )}
+
+      <AddGroup
+        isOpen={showAddGroup}
+        onClose={() => setShowAddGroup(false)}
+        sidebarUpdateGroups={sidebarUpdateGroups}
+        updateGroups={updateGroups}
+        onSelectGroup={onSelectGroup}
+      />
     </>
   );
 };

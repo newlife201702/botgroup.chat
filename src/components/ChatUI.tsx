@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/tooltip";
 
 import {generateAICharacters} from "@/config/aiCharacters";
-import { groups } from "@/config/groups";
+import { Group, groups as groupsValue } from "@/config/groups";
 import type { AICharacter } from "@/config/aiCharacters";
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm'
@@ -142,6 +142,7 @@ const KaTeXStyle = () => (
 const ChatUI = () => {
   // 使用当前选中的群组在 groups 数组中的索引
   const [selectedGroupIndex, setSelectedGroupIndex] = useState(0); // 默认选中第1个群组
+  const [groups, setGroups] = useState(groupsValue);
   const [group, setGroup] = useState(groups[selectedGroupIndex]);
   const [isGroupDiscussionMode, setIsGroupDiscussionMode] = useState(group.isGroupDiscussionMode);
   const groupAiCharacters = generateAICharacters(group.name)
@@ -418,9 +419,11 @@ const ChatUI = () => {
   };
 
   // 处理群组选择
-  const handleSelectGroup = (index: number) => {
+  const handleSelectGroup = (index: number, newGroups?: Group[]) => {
+    console.log('index', index, 'groups', groups, 'newGroups', newGroups);
     setSelectedGroupIndex(index);
-    const newGroup = groups[index];
+    const newGroup = (newGroups || groups)[index];
+    console.log('newGroup', newGroup);
     setGroup(newGroup);
     
     // 重新生成当前群组的 AI 角色，并按照 members 数组的顺序排序
@@ -446,6 +449,11 @@ const ChatUI = () => {
     }
   };
 
+  const updateGroups = (newGroups: Group[]) => {
+    console.log('updateGroups_newGroups', newGroups);
+    setGroups(newGroups);
+  };
+
   return (
     <>
       <KaTeXStyle />
@@ -457,6 +465,7 @@ const ChatUI = () => {
             toggleSidebar={toggleSidebar} 
             selectedGroupIndex={selectedGroupIndex}
             onSelectGroup={handleSelectGroup}
+            updateGroups={updateGroups}
           />
           
           {/* 聊天主界面 */}

@@ -7,7 +7,9 @@ export interface Group {
   isGroupDiscussionMode: boolean;
 }
 
-export const groups: Group[] = [
+const localStorageGroups: Group[] = localStorage.getItem('localStorageGroups') ? JSON.parse(localStorage.getItem('localStorageGroups')) : [];
+console.log('localStorageGroups', localStorageGroups);
+export const groups: Group[] = localStorageGroups.length > 0 ? localStorageGroups : [
   {
     id: 'group1',
     name: '🔥硅碳生命体交流群',
